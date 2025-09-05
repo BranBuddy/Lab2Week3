@@ -50,17 +50,32 @@ public class ShapeBehaviorEditor : Editor
 
         if (GUILayout.Button("Disable/Enable All Shapes", GUILayout.Height(40)))
         {
+            bool isTurnedOn = true;
+            if (isTurnedOn)
+            {
+                foreach (var shape in GameObject.FindGameObjectsWithTag("Handler"))
+                {
+                    Undo.RecordObject(shape.gameObject, "Disable/Enable All Shapes");
+                    shape.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    shape.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    
+                }
 
-            foreach (var shape in GameObject.FindGameObjectsWithTag("Cube"))
-            {
-                Undo.RecordObject(shape.gameObject, "Disable/Enable All Shapes");
-                shape.gameObject.SetActive(false);
+                isTurnedOn = true;
             }
-            foreach (var shape in GameObject.FindGameObjectsWithTag("Sphere"))
+            else
             {
-                Undo.RecordObject(shape.gameObject, "Disable/Enable All Shapes");
-                shape.gameObject.SetActive(false);
+                foreach (var shape in GameObject.FindGameObjectsWithTag("Handler"))
+                {
+                    Undo.RecordObject(shape.gameObject, "Disable/Enable All Shapes");
+                    shape.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    shape.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                    
+                }
+
+                isTurnedOn = true;
             }
+            
         }
 
             GUI.backgroundColor = cachedColor;
